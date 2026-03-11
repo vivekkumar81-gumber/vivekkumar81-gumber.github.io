@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Govt High School Dhingan Wali</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* =============================================
+       CSS VARIABLES & RESET
+    ============================================= */
+    :root {
+      --navy:    #0a2342;
+      --blue:    #1565c0;
+      --sky:     #1e88e5;
+      --green:   #2e7d32;
+      --mint:    #43a047;
+      --gold:    #f9a825;
+      --light:   #f4f8ff;
+      --white:   #ffffff;
+      --gray:    #607d8b;
+      --text:    #1a2a3a;
+      --border:  #dde6f0;
+      --shadow:  0 4px 24px rgba(10,35,66,0.10);
+      --radius:  14px;
+      --transition: 0.32s cubic-bezier(.4,0,.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--light);
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* =============================================
+       UTILITY
+    ============================================= */
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 88px 0; }
+    .section-label {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--sky), var(--mint));
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.18;
+      margin-bottom: 14px;
+    }
+    .section-sub {
+      color: var(--gray);
+      font-size: 1.05rem;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .divider {
+      width: 54px; height: 4px;
+      background: linear-gradient(90deg, var(--blue), var(--mint));
+      border-radius: 4px;
+      margin: 16px 0 44px;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600; font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--sky), var(--blue));
+      color: #fff;
+      box-shadow: 0 6px 22px rgba(21,101,192,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(21,101,192,0.45); }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.7);
+      color: #fff;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.12); }
+
+    /* =============================================
+       NAVBAR
+    ============================================= */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      padding: 0 24px;
+      transition: var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(10,35,66,0.10);
+    }
+    .nav-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .nav-logo-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--blue), var(--mint));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .nav-logo-text { display: flex; flex-direction: column; }
+    .nav-logo-text strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    .nav-logo-text span {
+      font-size: 0.72rem;
+      color: var(--gray);
+      letter-spacing: 0.5px;
+    }
+    #navbar:not(.scrolled) .nav-logo-text strong,
+    #navbar:not(.scrolled) .nav-logo-text span { color: #fff; }
+    #navbar:not(.scrolled) .nav-logo-text span { color: rgba(255,255,255,0.75); }
+
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a {
+      font-size: 0.88rem; font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: var(--transition);
+      color: var(--navy);
+    }
+    #navbar:not(.scrolled) .nav-links a { color: rgba(255,255,255,0.88); }
+    .nav-links a:hover { background: rgba(21,101,192,0.10); color: var(--blue); }
+    #navbar:not(.scrolled) .nav-links a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+    /* Hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+    .hamburger span {
+      display: block; width: 26px; height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    #navbar:not(.scrolled) .hamburger span { background: #fff; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 72px; left: 0; right: 0;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(16px);
+      padding: 16px 24px 24px;
+      box-shadow: 0 8px 32px rgba(10,35,66,0.12);
+      z-index: 998;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 500;
+      color: var(--navy);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .mobile-menu a:hover { background: var(--light); color: var(--blue); }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    #hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(160deg, rgba(10,35,66,0.92) 0%, rgba(21,101,192,0.82) 55%, rgba(46,125,50,0.75) 100%),
+        url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1600&q=80') center/cover no-repeat;
+    }
+    /* Geometric decoration */
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(30,136,229,0.18) 0%, transparent 70%),
+        repeating-linear-gradient(135deg, transparent 0, transparent 48px, rgba(255,255,255,0.03) 48px, rgba(255,255,255,0.03) 50px);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 120px 24px 80px;
+      max-width: 1180px; margin: 0 auto;
+      width: 100%;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 1px;
+      padding: 7px 18px; border-radius: 50px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.7s 0.1s both;
+    }
+    .hero-badge::before { content: '🎓'; font-size: 1rem; }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 6vw, 4.4rem);
+      color: #fff;
+      line-height: 1.1;
+      max-width: 780px;
+      margin-bottom: 22px;
+      animation: fadeUp 0.7s 0.2s both;
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-tagline {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: rgba(255,255,255,0.82);
+      max-width: 520px;
+      line-height: 1.65;
+      margin-bottom: 42px;
+      animation: fadeUp 0.7s 0.3s both;
+    }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 14px;
+      animation: fadeUp 0.7s 0.4s both;
+    }
+    .hero-stats {
+      display: flex; flex-wrap: wrap; gap: 32px;
+      margin-top: 72px;
+      animation: fadeUp 0.7s 0.5s both;
+    }
+    .hero-stat { color: #fff; }
+    .hero-stat strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      line-height: 1;
+      color: var(--gold);
+    }
+    .hero-stat span { font-size: 0.88rem; color: rgba(255,255,255,0.72); }
+    .hero-scroll {
+      position: absolute; bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.6); font-size: 0.75rem; letter-spacing: 1px;
+      cursor: pointer;
+    }
+    .scroll-dot {
+      width: 28px; height: 46px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 14px;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 7px;
+    }
+    .scroll-dot::after {
+      content: '';
+      width: 5px; height: 8px;
+      background: rgba(255,255,255,0.75);
+      border-radius: 3px;
+      animation: scrollBob 1.4s infinite;
+    }
+
+    /* =============================================
+       ABOUT
+    ============================================= */
+    #about { background: #fff; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-img-wrap {
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--sky) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+    }
+    .about-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .about-badge {
+      position: absolute; bottom: -20px; right: -20px;
+      background: linear-gradient(135deg, var(--green), var(--mint));
+      color: #fff;
+      border-radius: 14px;
+      padding: 18px 24px;
+      box-shadow: 0 8px 28px rgba(46,125,50,0.30);
+    }
+    .about-badge strong { font-size: 1.8rem; font-family: 'Playfair Display', serif; display: block; }
+    .about-badge span { font-size: 0.8rem; opacity: 0.88; }
+    .about-features { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+    .about-feature {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 18px;
+      background: var(--light);
+      border-radius: 12px;
+      border-left: 4px solid var(--sky);
+      transition: var(--transition);
+    }
+    .about-feature:hover { transform: translateX(4px); border-left-color: var(--mint); }
+    .about-feature-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .about-feature h4 { font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 3px; }
+    .about-feature p { font-size: 0.85rem; color: var(--gray); }
+
+    /* =============================================
+       CLASSES
+    ============================================= */
+    #classes { background: var(--light); }
+    .classes-header { text-align: center; margin-bottom: 56px; }
+    .classes-header .section-sub { margin: 0 auto; }
+    .classes-header .divider { margin: 16px auto 0; }
+    .classes-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+    .class-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 36px 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+    .class-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--blue), var(--mint));
+      transform: scaleX(0);
+      transition: var(--transition);
+    }
+    .class-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(10,35,66,0.14); }
+    .class-card:hover::before { transform: scaleX(1); }
+    .class-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--blue), var(--mint));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .class-label { font-size: 0.88rem; color: var(--gray); font-weight: 500; }
+    .class-tag {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 0.72rem; font-weight: 600;
+      background: var(--light);
+      color: var(--blue);
+      padding: 4px 12px; border-radius: 50px;
+    }
+
+    /* =============================================
+       FACULTY
+    ============================================= */
+    #faculty { background: #fff; }
+    .faculty-header { text-align: center; margin-bottom: 56px; }
+    .faculty-header .divider { margin: 16px auto 0; }
+    .faculty-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .teacher-card {
+      background: var(--light);
+      border-radius: var(--radius);
+      padding: 28px 20px 24px;
+      text-align: center;
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .teacher-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--sky), var(--mint));
+      transform: scaleX(0); transform-origin: left;
+      transition: var(--transition);
+    }
+    .teacher-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); background: #fff; }
+    .teacher-card:hover::after { transform: scaleX(1); }
+    .teacher-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .teacher-name { font-weight: 600; font-size: 0.98rem; color: var(--navy); margin-bottom: 5px; }
+    .teacher-subject {
+      font-size: 0.8rem; color: var(--gray);
+      background: rgba(21,101,192,0.08);
+      color: var(--blue);
+      padding: 3px 12px; border-radius: 50px;
+      display: inline-block;
+    }
+    .teacher-exp { font-size: 0.75rem; color: var(--gray); margin-top: 8px; }
+
+    /* =============================================
+       FACILITIES
+    ============================================= */
+    #facilities { background: var(--navy); }
+    #facilities .section-title { color: #fff; }
+    #facilities .section-label { background: linear-gradient(135deg, var(--gold), #f57f17); }
+    .facilities-header { text-align: center; margin-bottom: 56px; }
+    .facilities-header .divider { background: linear-gradient(90deg, var(--gold), var(--mint)); margin: 16px auto 0; }
+    .facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .facility-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      transition: var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .facility-card:hover { background: rgba(255,255,255,0.11); transform: translateY(-4px); }
+    .facility-icon {
+      font-size: 2.6rem;
+      margin-bottom: 18px;
+      display: block;
+    }
+    .facility-card h3 { color: #fff; font-size: 1.15rem; margin-bottom: 10px; }
+    .facility-card p { color: rgba(255,255,255,0.60); font-size: 0.88rem; line-height: 1.65; }
+    .facility-glow {
+      position: absolute; top: -30px; right: -30px;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(30,136,229,0.25), transparent 70%);
+    }
+
+    /* =============================================
+       GALLERY
+    ============================================= */
+    #gallery { background: var(--light); }
+    .gallery-header { text-align: center; margin-bottom: 48px; }
+    .gallery-header .divider { margin: 16px auto 0; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 220px);
+      gap: 16px;
+    }
+    .gallery-item {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-item:first-child { grid-row: 1 / 3; }
+    .gallery-thumb {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover .gallery-thumb { transform: scale(1.07); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,35,66,0.7), transparent);
+      opacity: 0;
+      transition: var(--transition);
+      display: flex; align-items: flex-end; padding: 18px;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay span { color: #fff; font-weight: 500; font-size: 0.9rem; }
+
+    /* =============================================
+       ANNOUNCEMENTS
+    ============================================= */
+    #announcements { background: #fff; }
+    .ann-header { margin-bottom: 48px; }
+    .ann-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .ann-card {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .ann-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+    .ann-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 22px;
+      background: var(--light);
+      border-bottom: 1px solid var(--border);
+    }
+    .ann-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; padding: 4px 12px;
+      border-radius: 50px; color: #fff;
+    }
+    .ann-tag.notice { background: var(--blue); }
+    .ann-tag.exam   { background: var(--green); }
+    .ann-tag.event  { background: #e65100; }
+    .ann-tag.holiday{ background: var(--gray); }
+    .ann-date { font-size: 0.8rem; color: var(--gray); }
+    .ann-body { padding: 20px 22px; }
+    .ann-body h3 { font-size: 1rem; color: var(--navy); margin-bottom: 8px; }
+    .ann-body p { font-size: 0.875rem; color: var(--gray); line-height: 1.65; }
+
+    /* =============================================
+       CONTACT
+    ============================================= */
+    #contact {
+      background: linear-gradient(160deg, var(--navy) 0%, #0d3b6e 100%);
+    }
+    #contact .section-title { color: #fff; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .contact-info { color: rgba(255,255,255,0.88); }
+    .contact-info p { line-height: 1.7; margin-bottom: 36px; font-size: 0.95rem; color: rgba(255,255,255,0.65); }
+    .contact-items { display: flex; flex-direction: column; gap: 16px; }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 18px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .contact-item-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .contact-item div strong { display: block; color: #fff; font-size: 0.88rem; margin-bottom: 3px; }
+    .contact-item div span { color: rgba(255,255,255,0.60); font-size: 0.85rem; }
+
+    /* Form */
+    .contact-form {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      border-radius: 18px;
+      padding: 40px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+    .form-group label { font-size: 0.85rem; color: rgba(255,255,255,0.75); font-weight: 500; }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 10px;
+      padding: 13px 16px;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: var(--transition);
+      resize: vertical;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.38); }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--sky);
+      background: rgba(255,255,255,0.13);
+    }
+    .form-group select option { background: var(--navy); }
+    .form-error { color: #ff8a80; font-size: 0.78rem; display: none; }
+    .form-error.visible { display: block; }
+    .form-success {
+      display: none; text-align: center;
+      padding: 32px; color: #fff;
+    }
+    .form-success.visible { display: block; }
+    .success-icon { font-size: 3rem; margin-bottom: 12px; }
+    .form-success h3 { font-size: 1.3rem; margin-bottom: 8px; }
+    .form-success p { color: rgba(255,255,255,0.65); font-size: 0.9rem; }
+    .submit-btn {
+      width: 100%; padding: 15px;
+      background: linear-gradient(135deg, var(--sky), var(--blue));
+      color: #fff; border: none; border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 18px rgba(21,101,192,0.4);
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(21,101,192,0.5); }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: #050f1a;
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 0.875rem;
+    }
+    footer a { color: rgba(255,255,255,0.55); transition: var(--transition); }
+    footer a:hover { color: var(--sky); }
+    .footer-inner { max-width: 1180px; margin: 0 auto; }
+    .footer-top {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 16px; margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      color: #fff; font-size: 1.05rem;
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+
+    /* =============================================
+       SCROLL ANIMATIONS
+    ============================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* =============================================
+       KEYFRAMES
+    ============================================= */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollBob {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(10px); }
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-visual { max-width: 500px; }
+      .classes-grid { grid-template-columns: repeat(3, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .gallery-grid { grid-template-rows: repeat(2, 180px); }
+    }
+    @media (max-width: 768px) {
+      .section { padding: 64px 0; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .classes-grid { grid-template-columns: repeat(3, 1fr); }
+      .ann-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+      .gallery-item:first-child { grid-row: auto; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+      .about-badge { right: 0; bottom: -16px; }
+      .contact-form { padding: 28px 20px; }
+    }
+    @media (max-width: 480px) {
+      .classes-grid { grid-template-columns: repeat(2, 1fr); }
+      .faculty-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =============================================
+       NAVBAR
+  ============================================= -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <div class="nav-logo-icon">🏫</div>
+        <div class="nav-logo-text">
+          <strong>GHS Dhingan Wali</strong>
+          <span>Punjab Government School</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#classes">Classes</a>
+        <a href="#faculty">Faculty</a>
+        <a href="#facilities">Facilities</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#announcements">News</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about"         onclick="closeMobile()">About</a>
+    <a href="#classes"       onclick="closeMobile()">Classes</a>
+    <a href="#faculty"       onclick="closeMobile()">Faculty</a>
+    <a href="#facilities"    onclick="closeMobile()">Facilities</a>
+    <a href="#gallery"       onclick="closeMobile()">Gallery</a>
+    <a href="#announcements" onclick="closeMobile()">News</a>
+    <a href="#contact"       onclick="closeMobile()">Contact</a>
+  </div>
+
+  <!-- =============================================
+       HERO
+  ============================================= -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Punjab Government School · PSEB Mohali</div>
+      <h1 class="hero-title">Govt High School<br/><span>Dhingan Wali</span></h1>
+      <p class="hero-tagline">Quality Education for a Bright Future — nurturing young minds of Punjab with knowledge, values, and vision.</p>
+      <div class="hero-actions">
+        <a href="#about" class="btn btn-primary">Discover More</a>
+        <a href="#contact" class="btn btn-outline">Contact Us</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>5</strong><span>Classes (6th–10th)</span></div>
+        <div class="hero-stat"><strong>17</strong><span>Faculty Members</span></div>
+        <div class="hero-stat"><strong>PSEB</strong><span>Affiliated Board</span></div>
+        <div class="hero-stat"><strong>Punjab</strong><span>Government School</span></div>
+      </div>
+    </div>
+    <div class="hero-scroll" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+      <div class="scroll-dot"></div>
+      SCROLL
+    </div>
+  </section>
+
+  <!-- =============================================
+       ABOUT
+  ============================================= -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="about-grid">
+        <!-- Visual -->
+        <div class="about-visual reveal">
+          <div class="about-img-wrap">
+            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80" alt="School building" loading="lazy"/>
+          </div>
+          <div class="about-badge">
+            <strong>Est.</strong>
+            <span>Govt School, Punjab</span>
+          </div>
+        </div>
+        <!-- Text -->
+        <div class="reveal">
+          <span class="section-label">About Us</span>
+          <h2 class="section-title">Shaping Futures in<br/>Dhingan Wali, Punjab</h2>
+          <div class="divider"></div>
+          <p class="section-sub">
+            Govt High School Dhingan Wali is a government-run educational institution managed by the <strong>Punjab Government</strong> and affiliated with the <strong>Punjab School Education Board (PSEB), Mohali</strong>. The school is committed to providing quality, inclusive education to students from Class 6th to 10th.
+          </p>
+          <div class="about-features">
+            <div class="about-feature">
+              <span class="about-feature-icon">🏛️</span>
+              <div>
+                <h4>Managed by Punjab Government</h4>
+                <p>Operated under the Department of School Education, Government of Punjab.</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <span class="about-feature-icon">📋</span>
+              <div>
+                <h4>PSEB Affiliated – Mohali</h4>
+                <p>Curriculum and examinations conducted under Punjab School Education Board, Mohali.</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <span class="about-feature-icon">👨‍🏫</span>
+              <div>
+                <h4>Dedicated Faculty Team</h4>
+                <p>17 qualified and experienced teachers delivering quality education every day.</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <span class="about-feature-icon">🌱</span>
+              <div>
+                <h4>Holistic Development</h4>
+                <p>Focus on academics, sports, cultural activities, and moral values.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       CLASSES
+  ============================================= -->
+  <section id="classes" class="section">
+    <div class="container">
+      <div class="classes-header reveal">
+        <span class="section-label">Academic Programme</span>
+        <h2 class="section-title">Classes Offered</h2>
+        <div class="divider"></div>
+        <p class="section-sub">We offer a comprehensive curriculum from Class 6 through Class 10, following PSEB guidelines and designed for holistic student development.</p>
+      </div>
+      <div class="classes-grid reveal">
+        <!-- Class 6 -->
+        <div class="class-card">
+          <div class="class-number">6</div>
+          <div class="class-label">Class Sixth</div>
+          <div class="class-tag">Foundation</div>
+        </div>
+        <!-- Class 7 -->
+        <div class="class-card">
+          <div class="class-number">7</div>
+          <div class="class-label">Class Seventh</div>
+          <div class="class-tag">Building Blocks</div>
+        </div>
+        <!-- Class 8 -->
+        <div class="class-card">
+          <div class="class-number">8</div>
+          <div class="class-label">Class Eighth</div>
+          <div class="class-tag">Core Skills</div>
+        </div>
+        <!-- Class 9 -->
+        <div class="class-card">
+          <div class="class-number">9</div>
+          <div class="class-label">Class Ninth</div>
+          <div class="class-tag">Pre-Board</div>
+        </div>
+        <!-- Class 10 -->
+        <div class="class-card">
+          <div class="class-number">10</div>
+          <div class="class-label">Class Tenth</div>
+          <div class="class-tag">PSEB Board</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FACULTY
+  ============================================= -->
+  <section id="faculty" class="section">
+    <div class="container">
+      <div class="faculty-header reveal">
+        <span class="section-label">Our Team</span>
+        <h2 class="section-title">Meet Our Faculty</h2>
+        <div class="divider"></div>
+        <p class="section-sub">Our dedicated team of 17 qualified educators is committed to nurturing every student's potential.</p>
+      </div>
+      <div class="faculty-grid reveal" id="facultyGrid">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FACILITIES
+  ============================================= -->
+  <section id="facilities" class="section">
+    <div class="container">
+      <div class="facilities-header reveal">
+        <span class="section-label">Infrastructure</span>
+        <h2 class="section-title">Our Facilities</h2>
+        <div class="divider"></div>
+        <p style="color:rgba(255,255,255,0.60); max-width:520px; margin:0 auto; font-size:1.05rem; line-height:1.7;">Well-equipped facilities to support learning, health, and overall development of every student.</p>
+      </div>
+      <div class="facilities-grid reveal">
+        <div class="facility-card">
+          <div class="facility-glow"></div>
+          <span class="facility-icon">🏫</span>
+          <h3>Spacious Classrooms</h3>
+          <p>Well-lit, ventilated classrooms equipped with blackboards and adequate seating arrangements for all students.</p>
+        </div>
+        <div class="facility-card">
+          <div class="facility-glow"></div>
+          <span class="facility-icon">📚</span>
+          <h3>School Library</h3>
+          <p>A rich collection of PSEB textbooks, reference books, and reading materials to encourage a love for learning.</p>
+        </div>
+        <div class="facility-card">
+          <div class="facility-glow"></div>
+          <span class="facility-icon">⚽</span>
+          <h3>Playground</h3>
+          <p>A dedicated outdoor playground promoting physical fitness, sportsmanship, and recreational activities for all students.</p>
+        </div>
+        <div class="facility-card">
+          <div class="facility-glow"></div>
+          <span class="facility-icon">💻</span>
+          <h3>Computer Education</h3>
+          <p>Basic computer education and digital literacy programs to prepare students for the modern technological world.</p>
+        </div>
+        <div class="facility-card">
+          <div class="facility-glow"></div>
+          <span class="facility-icon">💧</span>
+          <h3>Clean Drinking Water</h3>
+          <p>Safe and clean filtered drinking water is available throughout the school premises for students and staff.</p>
+        </div>
+        <div class="facility-card">
+          <div class="facility-glow"></div>
+          <span class="facility-icon">🚻</span>
+          <h3>Sanitation Facilities</h3>
+          <p>Separate, hygienic washroom facilities for boys and girls, maintained to ensure a clean and safe environment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       GALLERY
+  ============================================= -->
+  <section id="gallery" class="section">
+    <div class="container">
+      <div class="gallery-header reveal">
+        <span class="section-label">Photo Gallery</span>
+        <h2 class="section-title">Life at Our School</h2>
+        <div class="divider"></div>
+        <p class="section-sub">Glimpses of academic activities, cultural events, sports, and everyday school life.</p>
+      </div>
+      <div class="gallery-grid reveal">
+        <div class="gallery-item">
+          <img class="gallery-thumb" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=700&q=75" alt="School building" loading="lazy"/>
+          <div class="gallery-overlay"><span>📸 School Campus</span></div>
+        </div>
+        <div class="gallery-item">
+          <img class="gallery-thumb" src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=700&q=75" alt="Classroom" loading="lazy"/>
+          <div class="gallery-overlay"><span>📸 Classroom Session</span></div>
+        </div>
+        <div class="gallery-item">
+          <img class="gallery-thumb" src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=700&q=75" alt="Students" loading="lazy"/>
+          <div class="gallery-overlay"><span>📸 Students Learning</span></div>
+        </div>
+        <div class="gallery-item">
+          <img class="gallery-thumb" src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=700&q=75" alt="Library" loading="lazy"/>
+          <div class="gallery-overlay"><span>📸 School Library</span></div>
+        </div>
+        <div class="gallery-item">
+          <img class="gallery-thumb" src="https://images.unsplash.com/photo-1574887427561-d3d5d58c9273?w=700&q=75" alt="Sports" loading="lazy"/>
+          <div class="gallery-overlay"><span>📸 Sports Day</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       ANNOUNCEMENTS
+  ============================================= -->
+  <section id="announcements" class="section">
+    <div class="container">
+      <div class="ann-header reveal">
+        <span class="section-label">Latest Updates</span>
+        <h2 class="section-title">Announcements & News</h2>
+        <div class="divider"></div>
+        <p class="section-sub">Stay informed about important school notices, examinations, and upcoming events.</p>
+      </div>
+      <div class="ann-grid reveal">
+        <div class="ann-card">
+          <div class="ann-top">
+            <span class="ann-tag notice">Notice</span>
+            <span class="ann-date">📅 March 10, 2025</span>
+          </div>
+          <div class="ann-body">
+            <h3>Annual Examination Schedule 2024–25</h3>
+            <p>Annual examinations for Classes 6th to 10th will commence from April 1, 2025. Students are advised to collect their admit cards from the school office by March 25.</p>
+          </div>
+        </div>
+        <div class="ann-card">
+          <div class="ann-top">
+            <span class="ann-tag exam">Exam</span>
+            <span class="ann-date">📅 February 20, 2025</span>
+          </div>
+          <div class="ann-body">
+            <h3>Class 10 Board Exam Preparation Camp</h3>
+            <p>A special revision camp for Class 10 students will be held every Saturday from March 1 to March 29, 2025. Attendance is compulsory for all Class 10 students.</p>
+          </div>
+        </div>
+        <div class="ann-card">
+          <div class="ann-top">
+            <span class="ann-tag event">Event</span>
+            <span class="ann-date">📅 January 26, 2025</span>
+          </div>
+          <div class="ann-body">
+            <h3>Republic Day Celebration</h3>
+            <p>Republic Day was celebrated with great enthusiasm at school. Students performed cultural programs and the principal addressed the gathering. Prize distribution ceremony was held.</p>
+          </div>
+        </div>
+        <div class="ann-card">
+          <div class="ann-top">
+            <span class="ann-tag holiday">Holiday</span>
+            <span class="ann-date">📅 March 5, 2025</span>
+          </div>
+          <div class="ann-body">
+            <h3>Holi Holiday Notice</h3>
+            <p>The school will remain closed on March 14, 2025 on account of Holi festival. Classes will resume on March 15, 2025 (Monday). Wishing everyone a colourful celebration.</p>
+          </div>
+        </div>
+        <div class="ann-card">
+          <div class="ann-top">
+            <span class="ann-tag notice">Notice</span>
+            <span class="ann-date">📅 March 1, 2025</span>
+          </div>
+          <div class="ann-body">
+            <h3>New Textbook Distribution</h3>
+            <p>PSEB textbooks for the session 2025–26 will be distributed to all students starting March 17, 2025. Parents are requested to ensure their children attend school on that day.</p>
+          </div>
+        </div>
+        <div class="ann-card">
+          <div class="ann-top">
+            <span class="ann-tag event">Event</span>
+            <span class="ann-date">📅 February 5, 2025</span>
+          </div>
+          <div class="ann-body">
+            <h3>Annual Sports Day 2025</h3>
+            <p>The Annual Sports Day will be held on March 22, 2025. Students are encouraged to register for their preferred sports events with their respective class teachers by March 10.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       CONTACT
+  ============================================= -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Info -->
+        <div class="reveal">
+          <span class="section-label">Get In Touch</span>
+          <h2 class="section-title" style="color:#fff;">Contact the School</h2>
+          <div class="divider"></div>
+          <p class="contact-info">For admissions, enquiries, or general information, feel free to reach out to us. We are here to help students and parents.</p>
+          <div class="contact-items">
+            <div class="contact-item">
+              <span class="contact-item-icon">📍</span>
+              <div>
+                <strong>Address</strong>
+                <span>Govt High School Dhingan Wali, Punjab, India</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-icon">📞</span>
+              <div>
+                <strong>Phone</strong>
+                <span>+91-XXXXX-XXXXX (School Office)</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-icon">📧</span>
+              <div>
+                <strong>Email</strong>
+                <span>ghsdhinganwali@punjab.gov.in</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-icon">🕐</span>
+              <div>
+                <strong>Office Hours</strong>
+                <span>Monday – Saturday: 8:00 AM – 2:00 PM</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-icon">🏫</span>
+              <div>
+                <strong>Board</strong>
+                <span>Punjab School Education Board (PSEB), Mohali</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="reveal">
+          <div class="contact-form">
+            <div id="formArea">
+              <h3 style="color:#fff; font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:24px;">Send Us a Message</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fname">First Name *</label>
+                  <input type="text" id="fname" placeholder="Your first name"/>
+                  <span class="form-error" id="fnameErr">Please enter your first name.</span>
+                </div>
+                <div class="form-group">
+                  <label for="lname">Last Name *</label>
+                  <input type="text" id="lname" placeholder="Your last name"/>
+                  <span class="form-error" id="lnameErr">Please enter your last name.</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" placeholder="your@email.com"/>
+                <span class="form-error" id="emailErr">Please enter a valid email address.</span>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="+91-XXXXX-XXXXX"/>
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject *</label>
+                <select id="subject">
+                  <option value="">— Select a subject —</option>
+                  <option>Admission Enquiry</option>
+                  <option>Examination Information</option>
+                  <option>Fee Structure</option>
+                  <option>Faculty Information</option>
+                  <option>General Enquiry</option>
+                  <option>Other</option>
+                </select>
+                <span class="form-error" id="subjectErr">Please select a subject.</span>
+              </div>
+              <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" rows="4" placeholder="Write your message here…"></textarea>
+                <span class="form-error" id="messageErr">Please enter a message (min 20 characters).</span>
+              </div>
+              <button class="submit-btn" onclick="submitForm()">Send Message →</button>
+            </div>
+            <div class="form-success" id="formSuccess">
+              <div class="success-icon">✅</div>
+              <h3>Message Sent Successfully!</h3>
+              <p>Thank you for contacting Govt High School Dhingan Wali. We will get back to you within 1–2 working days.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-logo">🏫 Govt High School Dhingan Wali</div>
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#classes">Classes</a>
+          <a href="#faculty">Faculty</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <p>© Govt High School Dhingan Wali – Punjab Government &nbsp;|&nbsp; Affiliated with PSEB, Mohali &nbsp;|&nbsp; All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- =============================================
+       JAVASCRIPT
+  ============================================= -->
+  <script>
+    /* ------- Faculty Data ------- */
+    const faculty = [
+      { name: 'Sh. Rajinder Singh',  subject: 'Hindi',         exp: '18 yrs', color: '#1565c0' },
+      { name: 'Smt. Gurpreet Kaur',  subject: 'Punjabi',       exp: '14 yrs', color: '#2e7d32' },
+      { name: 'Sh. Harpal Singh',    subject: 'Mathematics',   exp: '21 yrs', color: '#6a1b9a' },
+      { name: 'Smt. Amarjit Kaur',   subject: 'Science',       exp: '16 yrs', color: '#c62828' },
+      { name: 'Sh. Kulwinder Singh', subject: 'Social Studies',exp: '12 yrs', color: '#00695c' },
+      { name: 'Smt. Manjit Kaur',    subject: 'English',       exp: '19 yrs', color: '#e65100' },
+      { name: 'Sh. Baldev Singh',    subject: 'Mathematics',   exp: '11 yrs', color: '#4527a0' },
+      { name: 'Smt. Paramjit Kaur',  subject: 'Hindi',         exp: '9 yrs',  color: '#1565c0' },
+      { name: 'Sh. Sukhwinder Singh',subject: 'Computer Sc.',  exp: '7 yrs',  color: '#283593' },
+      { name: 'Smt. Navneet Kaur',   subject: 'Science',       exp: '13 yrs', color: '#558b2f' },
+      { name: 'Sh. Jagtar Singh',    subject: 'Social Studies',exp: '22 yrs', color: '#f57f17' },
+      { name: 'Smt. Baljit Kaur',    subject: 'Punjabi',       exp: '15 yrs', color: '#00838f' },
+      { name: 'Sh. Daljit Singh',    subject: 'English',       exp: '10 yrs', color: '#37474f' },
+      { name: 'Smt. Satinder Kaur',  subject: 'Art & Craft',   exp: '8 yrs',  color: '#ad1457' },
+      { name: 'Sh. Gurmeet Singh',   subject: 'Physical Ed.',  exp: '17 yrs', color: '#2e7d32' },
+      { name: 'Smt. Harpeet Kaur',   subject: 'Mathematics',   exp: '6 yrs',  color: '#1565c0' },
+      { name: 'Sh. Nirmal Singh',    subject: 'Science',       exp: '20 yrs', color: '#c62828' },
+    ];
+
+    /* ------- Render Faculty ------- */
+    function renderFaculty() {
+      const grid = document.getElementById('facultyGrid');
+      faculty.forEach(t => {
+        const initials = t.name.split(' ').slice(-2).map(w => w[0]).join('');
+        grid.innerHTML += `
+          <div class="teacher-card">
+            <div class="teacher-avatar" style="background:${t.color};">${initials}</div>
+            <div class="teacher-name">${t.name}</div>
+            <div class="teacher-subject">${t.subject}</div>
+            <div class="teacher-exp">Experience: ${t.exp}</div>
+          </div>`;
+      });
+    }
+    renderFaculty();
+
+    /* ------- Navbar scroll effect ------- */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* ------- Hamburger ------- */
+    const ham = document.getElementById('hamburger');
+    const mob = document.getElementById('mobileMenu');
+    ham.addEventListener('click', () => {
+      ham.classList.toggle('open');
+      mob.classList.toggle('open');
+    });
+    function closeMobile() {
+      ham.classList.remove('open');
+      mob.classList.remove('open');
+    }
+
+    /* ------- Scroll Reveal ------- */
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 90);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    /* ------- Form Validation ------- */
+    function showError(id, show) {
+      document.getElementById(id).classList.toggle('visible', show);
+    }
+    function val(id) { return document.getElementById(id).value.trim(); }
+    function isEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+    function submitForm() {
+      let valid = true;
+
+      if (!val('fname'))    { showError('fnameErr',   true);  valid = false; } else showError('fnameErr',   false);
+      if (!val('lname'))    { showError('lnameErr',   true);  valid = false; } else showError('lnameErr',   false);
+      if (!isEmail(val('email'))) { showError('emailErr', true); valid = false; } else showError('emailErr', false);
+      if (!val('subject'))  { showError('subjectErr', true);  valid = false; } else showError('subjectErr', false);
+      if (val('message').length < 20) { showError('messageErr', true); valid = false; } else showError('messageErr', false);
+
+      if (valid) {
+        document.getElementById('formArea').style.display    = 'none';
+        document.getElementById('formSuccess').classList.add('visible');
+      }
+    }
+  </script>
+</body>
+</html>
